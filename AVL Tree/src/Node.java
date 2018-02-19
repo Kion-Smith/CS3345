@@ -1,10 +1,12 @@
 
 public class Node 
 {
-	//some data
-	//idk what the data is yet
+	//values
+	//unsure how I am going to balance these
 	String ISBN;
 	BookObj value;
+	
+	//"pointers"
 	public Node left;
 	public Node right;
 	
@@ -24,10 +26,18 @@ public class Node
 		
 	}
 	
-	
-	public Node(String bookNum,int BookVal)
+	//Overloaded constructor
+	public Node(String bookNum,BookObj bookVal)
 	{
-		
+		//Data properties
+		ISBN = bookNum;
+		value = bookVal;
+			
+		//AVL properties
+		left = null;
+		right =null;
+		height = 0;
+				
 	}
 	
 }
