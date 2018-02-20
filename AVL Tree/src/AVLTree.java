@@ -5,12 +5,14 @@ public class AVLTree
 	
 	public AVLTree() 
 	{
-		
+		root = null;
 	}
+	
 	public Node insertNode(Node n)
 	{
 		return n;
 	}
+	
 	public Node rotateLeft(Node n)
 	{
 		return n;
@@ -28,6 +30,14 @@ public class AVLTree
 	
 	public int getBalance(Node n)
 	{
-		return 0;
+		if(n == null)
+		{
+			return 0;
+		}
+		else
+		{
+			return n.left.height - n.right.height;
+		}
+
 	}
 }
