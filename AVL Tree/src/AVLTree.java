@@ -27,6 +27,13 @@ public class AVLTree
 
 	public Node rotateRight(Node n)
 	{
+		Node target = n.right;
+		Node targetSub = target.left;
+		
+		target.left = n;
+		n.right = targetSub.left;
+		
+		
 		return n;
 	}
 	
