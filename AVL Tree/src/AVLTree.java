@@ -8,8 +8,21 @@ public class AVLTree
 		root = null;
 	}
 	
-	public Node insertNode(Node n)
+	public Node insertNode(Node n,Node cur)
 	{
+		if(n == null)
+		{
+			return null;
+		}
+		if(n.compareTo(cur) == 1)
+		{
+			
+		}
+		else if(n.compareTo(cur) == 0)
+		{
+			
+		}
+	
 		return n;
 	}
 	
@@ -40,7 +53,14 @@ public class AVLTree
 	
 	public int getHeight(Node n)
 	{
-		return n.height;
+		if(n == null)
+		{
+			return -1;
+		}
+		else
+		{
+			return n.height;
+		}
 	}
 	
 	public int getBalance(Node n)

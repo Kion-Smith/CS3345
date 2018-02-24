@@ -3,7 +3,7 @@ public class Node
 {
 	//values
 	//unsure how I am going to balance these
-	String ISBN;
+	String key;//ISBN
 	BookObj value;
 	
 	//"pointers"
@@ -16,7 +16,7 @@ public class Node
 	public Node()
 	{
 		//Data properties
-		ISBN = "";
+		key = "";
 		value = null;
 	
 		//AVL properties
@@ -30,7 +30,7 @@ public class Node
 	public Node(String bookNum,BookObj bookVal)
 	{
 		//Data properties
-		ISBN = bookNum;
+		key = bookNum;
 		value = bookVal;
 			
 		//AVL properties
@@ -40,4 +40,29 @@ public class Node
 				
 	}
 	
+	public int compareTo(Node compare)
+	{
+
+		try
+		{
+			Long og = Long.parseLong(key);
+			Long c = Long.parseLong(compare.key);
+			
+			if(og>c)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Not a valid isbn number");
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
 }
