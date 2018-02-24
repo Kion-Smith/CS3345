@@ -15,6 +15,18 @@ public class AVLTree
 	
 	public Node rotateLeft(Node n)
 	{
+		Node target = n.right;
+		Node targetSub = target.left;
+		
+		target.left = n;
+		n.right = targetSub.left;
+		
+		
+		return n;
+	}
+	
+	public Node rotateRight(Node n)
+	{
 		Node target = n.left;
 		Node targetSub = target.right;
 		
@@ -25,17 +37,6 @@ public class AVLTree
 		return n;
 	}
 
-	public Node rotateRight(Node n)
-	{
-		Node target = n.right;
-		Node targetSub = target.left;
-		
-		target.left = n;
-		n.right = targetSub.left;
-		
-		
-		return n;
-	}
 	
 	public int getHeight(Node n)
 	{
