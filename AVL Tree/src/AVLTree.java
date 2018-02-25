@@ -16,13 +16,19 @@ public class AVLTree
 		}
 		if(n.compareTo(cur) == 1)
 		{
-			
+			n.left = insertNode(n.left,cur);
 		}
 		else if(n.compareTo(cur) == 0)
 		{
+			n.right = insertNode(n.right,cur);
+		}
+		//maybe but this somewhere else
+		if(getBalance(n) >2 || getBalance(n)<-2)
+		{
 			
 		}
-	
+		//other 
+		
 		return n;
 	}
 	
