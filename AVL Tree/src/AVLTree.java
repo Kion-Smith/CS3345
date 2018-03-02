@@ -8,38 +8,67 @@ public class AVLTree
 		root = null;
 	}
 	
-	public Node insertNode(Node n,Node cur)
+	public Node insertNode(Node cur,int k,BookObj b)
 	{
-		if(n == null)
+		int balance =0;;
+		if(cur == null)
 		{
-			return null;
+			cur = new Node(k,b);
 		}
-		if(n.compareTo(cur) == 1)
+		if(k < cur.key)
 		{
-			n.left = insertNode(n.left,cur);
+			cur.left = insertNode(cur.left,k,b);
 		}
-		else if(n.compareTo(cur) == 0)
+		else if(k>cur.key)
 		{
-			n.right = insertNode(n.right,cur);
+			cur.right = insertNode(cur.right,k,b);
 		}
-		//maybe but this somewhere else
-		if(getBalance(n) >2 || getBalance(n)<-2)
+		else
 		{
-			
+			return cur;
 		}
-		//other 
 		
-		return n;
+		balance = getBalance(cur);
+		
+		
+		if(balance>1 && k<cur.left.key)
+		{
+			System.out.println("Imbalance occurred at inserting  "+k+" fixed in right rotation");
+			return rotateRight(cur);
+		}
+		
+		if(balance<-1 && k<cur.right.key)
+		{
+			System.out.println("Imbalance occurred at inserting  "+k+" fixed in left rotation");
+			return rotateLeft(cur);
+		}
+		
+		if(balance>1 && k>cur.left.key)
+		{
+			System.out.println("Imbalance occurred at inserting  "+k+" fixed in left right rotation");
+			cur.left = rotateLeft(cur.left);
+			return rotateRight(cur);
+		}
+		
+		if(balance<-1 && k>cur.right.key)
+		{
+			System.out.println("Imbalance occurred at inserting  "+k+" fixed in right left rotation");
+			cur.right = rotateRight(cur.right);
+			return rotateLeft(cur);
+		}
+		
+		return cur;
 	}
 	
 	public Node rotateLeft(Node n)
 	{
 		Node target = n.right;
-		Node targetSub = target.left;
-		
+		Node targetSub = target.left;		
 		target.left = n;
 		n.right = targetSub.left;
 		
+		n.setHeight( (compareHeight(n.left.getHeight(),n.right.getHeight())) + 1);
+		target.setHeight( (compareHeight(n.left.getHeight(),n.right.getHeight())) +1);
 		
 		return n;
 	}
@@ -48,26 +77,29 @@ public class AVLTree
 	{
 		Node target = n.left;
 		Node targetSub = target.right;
-		
 		target.right = n;
 		n.left = targetSub.right;
 		
-		
+		n.setHeight( (compareHeight(n.left.getHeight(),n.right.getHeight())) + 1);
+		target.setHeight( (compareHeight(n.left.getHeight(),n.right.getHeight())) +1);
+	
 		return n;
 	}
-
 	
-	public int getHeight(Node n)
+
+	public int compareHeight(int r,int l)
 	{
-		if(n == null)
+		if(r>l)
 		{
-			return -1;
+			return r;
 		}
 		else
 		{
-			return n.height;
+			return l;
 		}
+		
 	}
+	
 	
 	public int getBalance(Node n)
 	{

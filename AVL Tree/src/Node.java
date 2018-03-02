@@ -3,8 +3,8 @@ public class Node
 {
 	//values
 	//unsure how I am going to balance these
-	String key;//ISBN
-	BookObj value;
+	long key;//ISBN
+	BookObj book;
 	
 	//"pointers"
 	public Node left;
@@ -16,22 +16,22 @@ public class Node
 	public Node()
 	{
 		//Data properties
-		key = "";
-		value = null;
+		key = 0;
+		book= null;
 	
 		//AVL properties
 		left = null;
 		right =null;
-		height = -1;
+		height = 0;
 		
 	}
 	
 	//Overloaded constructor
-	public Node(String bookNum,BookObj bookVal)
+	public Node(int isbn,BookObj bookVal)
 	{
 		//Data properties
-		key = bookNum;
-		value = bookVal;
+		key = isbn;
+		book = bookVal;
 			
 		//AVL properties
 		left = null;
@@ -40,29 +40,15 @@ public class Node
 				
 	}
 	
-	public int compareTo(Node compare)
+	public void setHeight(int h)
 	{
-
-		try
-		{
-			Long og = Long.parseLong(key);
-			Long c = Long.parseLong(compare.key);
-			
-			if(og>c)
-			{
-				return 1;
-			}
-			else
-			{
-				return 0;
-			}
-		}
-		catch(Exception e)
-		{
-			System.out.println("Not a valid isbn number");
-			e.printStackTrace();
-		}
-		
-		return -1;
+		height =h;
 	}
+	
+	public int getHeight()
+	{
+		return height;
+	}
+	
+	
 }
