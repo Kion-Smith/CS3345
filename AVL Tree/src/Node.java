@@ -1,8 +1,10 @@
-
+/*Kion Smith
+ * kls160430
+ * CS3345-501
+ */
 public class Node 
 {
-	//values
-	//unsure how I am going to balance these
+	//Nodes values
 	long key;//ISBN
 	BookObj book;
 	
@@ -27,7 +29,7 @@ public class Node
 	}
 	
 	//Overloaded constructor
-	public Node(int isbn,BookObj bookVal)
+	public Node(long isbn,BookObj bookVal)
 	{
 		//Data properties
 		key = isbn;
@@ -36,19 +38,8 @@ public class Node
 		//AVL properties
 		left = null;
 		right =null;
-		height = 0;
+		height = 1;
 				
 	}
-	
-	public void setHeight(int h)
-	{
-		height =h;
-	}
-	
-	public int getHeight()
-	{
-		return height;
-	}
-	
 	
 }

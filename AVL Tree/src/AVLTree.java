@@ -1,58 +1,82 @@
-
+/*Kion Smith
+ * kls160430
+ * CS3345-501
+ */
 public class AVLTree
 {
+	//Root node, holds the tree
 	Node root;
 	
-	public AVLTree() 
+	//default constructor
+	public AVLTree()
 	{
 		root = null;
 	}
 	
-	public Node insertNode(Node cur,int k,BookObj b)
+	//Overloaded method used as a recursion helper function
+	public void insert(long key,BookObj book)
 	{
-		int balance =0;;
-		if(cur == null)
+		//go through node to insert
+		root = insert(root,key,book);
+	}
+	
+	public Node insert(Node cur,long key,BookObj book)
+	{
+		//if node is null then create this node
+		if(cur==null)
 		{
-			cur = new Node(k,b);
+			return (new Node(key,book));
 		}
-		if(k < cur.key)
+		
+		//BST property when inserting
+		//checking if cur key is less than node
+		if(key<cur.key)
 		{
-			cur.left = insertNode(cur.left,k,b);
+			cur.left = insert(cur.left,key,book);
 		}
-		else if(k>cur.key)
+		//checking if cur key is greater than node
+		else if(key>cur.key)
 		{
-			cur.right = insertNode(cur.right,k,b);
+			cur.right = insert(cur.right,key,book);
 		}
 		else
 		{
+			//returns if there is a duplicate
 			return cur;
 		}
 		
-		balance = getBalance(cur);
+		//increment the height
+		cur.height = maxHeight(height(cur.left),height(cur.right)) +1;
 		
+		//get the balance number for the property
+		int balance = getBalance(cur);
 		
-		if(balance>1 && k<cur.left.key)
+		//check the balance property
+		//check for Left left rotation
+		if(balance>1&&key<cur.left.key)
 		{
-			System.out.println("Imbalance occurred at inserting  "+k+" fixed in right rotation");
-			return rotateRight(cur);
+			System.out.println("Imbalance occurred at inserting ISBN "+key+"; Fixed using a Left left rotation");
+			rotateRight(cur);
 		}
-		
-		if(balance<-1 && k<cur.right.key)
+		//check for Right right rotation
+		if(balance<-1&&key>cur.right.key)
 		{
-			System.out.println("Imbalance occurred at inserting  "+k+" fixed in left rotation");
-			return rotateLeft(cur);
+			System.out.println("Imbalance occurred at inserting ISBN "+key+"; Fixed using a Right right rotation");
+			rotateLeft(cur);
 		}
-		
-		if(balance>1 && k>cur.left.key)
+		//check for the left right rotation
+		if(balance>1&&key>cur.left.key)
 		{
-			System.out.println("Imbalance occurred at inserting  "+k+" fixed in left right rotation");
+			System.out.println("Imbalance occurred at inserting ISBN "+key+"; Fixed using a Left right rotation");
+			//rotate left then right
 			cur.left = rotateLeft(cur.left);
 			return rotateRight(cur);
 		}
-		
-		if(balance<-1 && k>cur.right.key)
+		//check for the right left rotation
+		if(balance<-1&&key<cur.right.key)
 		{
-			System.out.println("Imbalance occurred at inserting  "+k+" fixed in right left rotation");
+			System.out.println("Imbalance occurred at inserting ISBN "+key+"; Fixed using a Right left rotation");
+			//rotate right then left
 			cur.right = rotateRight(cur.right);
 			return rotateLeft(cur);
 		}
@@ -60,59 +84,79 @@ public class AVLTree
 		return cur;
 	}
 	
+	//Rotate to the left
 	public Node rotateLeft(Node n)
 	{
-		Node target = n.right;
-		Node targetSub = target.left;		
-		target.left = n;
-		n.right = targetSub.left;
+		Node target = n.right;//rotate target to node
+		Node subTree  = target.left;//get its subtree
 		
-		n.setHeight( (compareHeight(n.left.getHeight(),n.right.getHeight())) + 1);
-		target.setHeight( (compareHeight(n.left.getHeight(),n.right.getHeight())) +1);
+		target.left = n;//set targets old sub tree to nodes sub tree
+		n.right = subTree;// set old sub tree to nodes subtree
 		
-		return n;
+		//increment the height of the tree
+		n.height = maxHeight(height(n.left),height(n.right))+1;
+		target.height = maxHeight(height(target.left),height(target.right))+1;
+		
+		return target;
 	}
 	
+	//Rotate to the right
 	public Node rotateRight(Node n)
 	{
-		Node target = n.left;
-		Node targetSub = target.right;
-		target.right = n;
-		n.left = targetSub.right;
+		Node target = n.left;//rotate target to node
+		Node subTree = target.right;//get its subtree
 		
-		n.setHeight( (compareHeight(n.left.getHeight(),n.right.getHeight())) + 1);
-		target.setHeight( (compareHeight(n.left.getHeight(),n.right.getHeight())) +1);
-	
-		return n;
+		target.right = n; //set targets old sub tree to nodes sub tree
+		n.left =subTree;// set old sub tree to nodes subtree
+		
+		//increment the height of the tree
+		n.height = maxHeight(height(n.left),height(n.right))+1;
+		target.height = maxHeight(height(target.left),height(target.right))+1;
+		
+		return target;
 	}
 	
 
-	public int compareHeight(int r,int l)
+	
+	//get current height of node
+	public int height(Node n)
 	{
-		if(r>l)
+		if(n==null)
 		{
-			return r;
+			return -1;//empy node height is -1
 		}
 		else
 		{
-			return l;
+			return n.height;
 		}
-		
+	}
+	//Chooses the higher height form l or right node
+	public int maxHeight(int h1,int h2)
+	{
+		if(h1>h2)
+		{
+			return h1;
+		}
+		else
+		{
+			return h2;
+		}
 	}
 	
 	
+	//(L-R) gets balance at a given node
 	public int getBalance(Node n)
 	{
-		if(n == null)
+		if(n==null)
 		{
-			return 0;
+			return -1;
 		}
 		else
 		{
-			return n.left.height - n.right.height;
+			return height(n.left)-height(n.right);
 		}
-
 	}
 	
+
 	
 }
