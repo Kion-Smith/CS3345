@@ -7,6 +7,9 @@ public class Node
 	public Node right;
 	
 	
+	public int[] keys;
+	public int height;
+	
 	//default constructor
 	public Node()
 	{
