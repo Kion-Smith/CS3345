@@ -7,4 +7,6 @@ public class bTree
 	{
 		
 	}
+	//need to add insert and various if staments, using insertion
+	
 }
